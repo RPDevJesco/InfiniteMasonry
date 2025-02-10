@@ -1,6 +1,6 @@
 window.MasonryLayout = class MasonryLayout {
     constructor(options = {}) {
-        this.virtualizeBuffer = options.virtualizeBuffer || 2000; // Add this line
+        this.virtualizeBuffer = options.virtualizeBuffer || 2000; // Don't forget to add this line because I made whoopsies.
         this.container = options.container || document.querySelector('.masonry-container');
         this.baseUnit = options.baseUnit || 200; // Base unit for grid calculations
         this.gap = options.gap || 10;
@@ -25,7 +25,7 @@ window.MasonryLayout = class MasonryLayout {
         this.onScroll = this.onScroll.bind(this);
         this.onResize = this.debounce(this.onResize.bind(this), 150);
 
-        // Initialize
+        // Initialize the application moron!
         this.init();
     }
 
@@ -47,7 +47,7 @@ window.MasonryLayout = class MasonryLayout {
             const height = Math.round(pattern.height * this.baseUnit);
             const imageIndex = page * pageSize + i;
 
-            // Check if image exists before adding it to items
+            // Check if image exists before adding it to items. Should probably update it so that it checks all image formats.
             try {
                 const response = await fetch(`/images/${imageIndex + 1}.png`, { method: 'HEAD' });
                 if (response.ok) {
@@ -85,7 +85,7 @@ window.MasonryLayout = class MasonryLayout {
             placeholder.className = 'masonry-item-placeholder';
             element.appendChild(placeholder);
 
-            // Set up load and error handlers before setting src
+            // Set up load and error handlers before setting src because it is smart
             img.onload = () => {
                 console.log('Image loaded:', item.src);
                 placeholder.remove();
@@ -95,7 +95,7 @@ window.MasonryLayout = class MasonryLayout {
 
             img.onerror = () => {
                 console.log('Image failed to load:', item.src);
-                // Instead of showing error placeholder, remove the entire item
+                // Instead of showing error placeholder, remove the entire item (removing this shows placeholder images which I don't want)
                 element.remove();
             };
 
@@ -110,7 +110,7 @@ window.MasonryLayout = class MasonryLayout {
             this.container.appendChild(element);
         }
 
-        // Add visible borders and make sure positioning is applied
+        // Add visible borders and make sure positioning is applied because in testing when things don't appear, we want to make sure that the layout is working.
         element.style.position = 'absolute';
         element.style.left = `${position.left}px`;
         element.style.top = `${position.top}px`;
@@ -132,10 +132,8 @@ window.MasonryLayout = class MasonryLayout {
             const pattern = item.pattern;
             let placed = false;
 
-            // Find a position where this item fits
             while (!placed) {
                 if (currentX + pattern.width <= cols) {
-                    // Check if space is available
                     let fits = true;
                     for (let y = currentY; y < currentY + pattern.height; y++) {
                         for (let x = currentX; x < currentX + pattern.width; x++) {
@@ -148,7 +146,6 @@ window.MasonryLayout = class MasonryLayout {
                     }
 
                     if (fits) {
-                        // Place the item
                         for (let y = currentY; y < currentY + pattern.height; y++) {
                             grid[y] = grid[y] || [];
                             for (let x = currentX; x < currentX + pattern.width; x++) {
@@ -167,7 +164,6 @@ window.MasonryLayout = class MasonryLayout {
                 }
 
                 if (!placed) {
-                    // Move to next position
                     currentX++;
                     if (currentX >= cols) {
                         currentX = 0;
@@ -177,7 +173,6 @@ window.MasonryLayout = class MasonryLayout {
             }
         });
 
-        // Update container height
         const maxY = Math.max(...this.items.map(item => {
             const pos = positions.get(item.id);
             return pos ? pos.top + pos.height : 0;
@@ -229,14 +224,11 @@ window.MasonryLayout = class MasonryLayout {
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImage');
 
-        // Set image source and show modal
         modalImg.src = imageSrc;
         modal.classList.add('show');
 
-        // Prevent body scrolling when modal is open
         document.body.style.overflow = 'hidden';
 
-        // Add event listeners if not already added
         if (!this.modalInitialized) {
             this.initializeModal();
         }
@@ -246,17 +238,14 @@ window.MasonryLayout = class MasonryLayout {
         const modal = document.getElementById('imageModal');
         const closeBtn = modal.querySelector('.modal-close');
 
-        // Close on X button click
         closeBtn.addEventListener('click', () => this.closeModal());
 
-        // Close on background click
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 this.closeModal();
             }
         });
 
-        // Close on escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 this.closeModal();
@@ -299,7 +288,6 @@ window.MasonryLayout = class MasonryLayout {
             this.items = [...this.items, ...newItems];
             console.log('Total items after update:', this.items.length);
 
-            // Only set hasMore to false if we get less than requested
             if (newItems.length < this.pageSize) {
                 console.log('Setting hasMore to false - received less items than requested');
                 this.hasMore = false;
