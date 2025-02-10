@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Masonry Layout</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="masonry-container"></div>
+<!-- Add this right after your masonry-container div -->
+<div class="modal" id="imageModal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <img id="modalImage" src="" alt="Full size image">
+    </div>
+</div>
+<script>
+    // Add error handling for script loading
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.log('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError: ' + error);
+        return false;
+    };
+</script>
+<script src="MasonryLayout.js"></script>
+<script>
+    console.log('Initializing masonry');
+    try {
+        const masonry = new MasonryLayout({
+            container: document.querySelector('.masonry-container'),
+            baseUnit: 200,  // Base unit size for grid
+            gap: 10,        // Gap between items
+            pageSize: 24    // Items per page
+        });
+        console.log('Masonry initialized', masonry);
+    } catch (e) {
+        console.error('Error initializing masonry:', e);
+    }
+</script>
+</body>
+</html>
