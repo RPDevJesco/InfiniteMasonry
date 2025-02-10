@@ -85,7 +85,6 @@ window.MasonryLayout = class MasonryLayout {
             placeholder.className = 'masonry-item-placeholder';
             element.appendChild(placeholder);
 
-            // Set up load and error handlers before setting src because it is smart
             img.onload = () => {
                 console.log('Image loaded:', item.src);
                 placeholder.remove();
