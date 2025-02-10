@@ -15,13 +15,13 @@ window.MasonryLayout = class MasonryLayout {
             { width: 1, height: 1 },    // Small square
         ];
 
-        // Internal state
+        // Internal state. Need to track these.
         this.items = [];
         this.currentPage = 0;
         this.isLoading = false;
         this.hasMore = true;
 
-        // Bind methods
+        // Bind methods to bind scrolling and resizing to it.
         this.onScroll = this.onScroll.bind(this);
         this.onResize = this.debounce(this.onResize.bind(this), 150);
 
