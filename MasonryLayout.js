@@ -1,6 +1,6 @@
 window.MasonryLayout = class MasonryLayout {
     constructor(options = {}) {
-        this.virtualizeBuffer = options.virtualizeBuffer || 2000; // Don't forget to add this line because I made whoopsies.
+        this.virtualizeBuffer = options.virtualizeBuffer || 2000; // Don't forget to add this line because I made whoopsies and forgot to include it in the index definition with testing. SO i'm being lazy and keeping this here instead of updating the script in index.html
         this.container = options.container || document.querySelector('.masonry-container');
         this.baseUnit = options.baseUnit || 200; // Base unit for grid calculations
         this.gap = options.gap || 10;
